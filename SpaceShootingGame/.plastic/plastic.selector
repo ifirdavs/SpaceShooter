@@ -1,4 +1,0 @@
-repository "SpaceShootingGame@Shermakhmadova_Madina@cloud"
-  path "/"
-    br "/main"
-    co "/main"
