@@ -1,44 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
+//2110021
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
-    public float speed;    // Start is called before the first frame update
+    public float speed = 5f;
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 10f;
+    private Rigidbody2D rb;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+     void Update()
     {
-        float x = Input.GetAxisRaw ("Horizontal");
-        float y = Input.GetAxisRaw ("Vertical");
-
-        Vector2 direction = new Vector2 (x,y).normalized;
-
-        Move (direction);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
     }
-    void Move (Vector2 direction)
+
+    void FixedUpdate()
     {
-        Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2 (0, 0));
-        Vector2 max = Camera.main.ViewportToWorldPoint (new Vector2 (1, 1));
+        float move = Input.GetAxisRaw("Horizontal");
+        Vector2 newPosition = rb.position + Vector2.right * move * speed * Time.fixedDeltaTime;
+        newPosition.x = Mathf.Clamp(newPosition.x, -849f, 850f); // Borders
+        rb.MovePosition(newPosition);
+    }
 
-        max.x = max.x - 0.225f;
-        min.x = min.x + 0.225f;
-
-        max.y = max.y - 0.285f;
-        min.y = min.y + 0.285f;
-
-        Vector2 pos = transform.position;
-
-        pos += direction * speed * Time.deltaTime;
-
-        pos.x = Mathf.Clamp (pos.x, min.x, max.x);
-        pos.x = Mathf.Clamp (pos.y, min.y, max.y);
-
-        transform.position=pos;
-
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        bullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * bulletSpeed;
     }
 }
