@@ -162,6 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpType: 1
-  duration: 8
-  healthIncreaseAmount: 20
-  speed: 1
+  duration: 10
+  healthIncreaseAmount: 0
+  speed: 2

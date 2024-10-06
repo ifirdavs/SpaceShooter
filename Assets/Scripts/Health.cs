@@ -5,8 +5,9 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {   
     [SerializeField] bool isPlayer;
-    [SerializeField] int health = 100;
-    [SerializeField] int score = 50;
+    [SerializeField] int maxHealth = 100;
+    private int health;
+    [SerializeField] int score = 0;
     [SerializeField] ParticleSystem hitEffect;
     CameraShake cameraShake;
     [SerializeField] bool applyCameraShake;
@@ -15,6 +16,10 @@ public class Health : MonoBehaviour
     ScoreKeeper scoreKeeper;
     LevelManager levelManager;
 
+    void Start()
+    {
+        health = maxHealth;
+    }
 
     void Awake() {
         cameraShake = Camera.main.GetComponent<CameraShake>();
@@ -71,6 +76,9 @@ public class Health : MonoBehaviour
     public void IncreaseHealth(int amount)
     {
         health += amount;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
         Debug.Log("Increased health by: " + amount + ". New health: " + health);
     }
 }

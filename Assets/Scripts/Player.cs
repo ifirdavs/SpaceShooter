@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
 
     IEnumerator ActivateSpeedBoost(float duration)
     {
-        speed *= 2;
+        speed = 10;
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
     }
